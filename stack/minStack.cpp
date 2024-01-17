@@ -1,27 +1,26 @@
+#include <bits/stdc++.h>
 #include <iostream>
-#include <vector>
+#include <stack>
 
 using namespace std;
 
 class MinStack {
 public:
-  vector<int> stack;
-  int minimum = 0;
-  MinStack() {
-    stack.clear();
-    minimum = 0;
-  }
-
+  stack<int> st;
+  stack<int> minimum;
   void push(int val) {
-    stack.push_back(val);
-    minimum = min(minimum, val);
+    st.push(val);
+    if (minimum.empty())
+      minimum.push(val);
+    else
+      minimum.push(min(minimum.top(), val));
   }
-
-  void pop() { stack.pop_back(); }
-
-  int top() { return stack[stack.size() - 1]; }
-
-  int getMin() { return minimum; }
+  void pop() {
+    st.pop();
+    minimum.pop();
+  }
+  int top() { return st.top(); }
+  int getMin() { return minimum.top(); }
 };
 
 int main() {
